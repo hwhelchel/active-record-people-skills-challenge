@@ -5,7 +5,11 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :name, scope: :email
 
   def proficiency_for(skill)
-    p Proficiency.where(user: self) 
-    Proficiency.where(user: self).find_by(skill: skill).level
+    proficiencies.find_by(skill: skill).level
+  end
+
+  def set_proficiency_for(skill, rank)
+    skill = proficiencies.find_by(skill: skill)
+    skill.update(level: rank)
   end
 end
